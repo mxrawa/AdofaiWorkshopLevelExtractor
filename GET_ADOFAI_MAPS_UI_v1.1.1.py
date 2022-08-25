@@ -16,32 +16,6 @@ __author__ = "一个憨憨毛"
 
 class GetWorkshopLevels(tk.Tk):
     def __init__(self):
-        """
-        Thank you for using this program.
-        Let me tell you what this program can do.
-        (This program took me a lot of effort to write. I hope you can carefully read this note.)
-        Let's get to the point!
-        =====Usage method=====
-            This is a Python file. Of course, you can use the Python interpreter to run this file.
-            However, you have to install some necessary packages to start this program through the source code.
-              Of course, if you are running in an executable file, I think you will not see this comment.
-                This should be leaked from the inside, right? I'm asking you.
-            To get down to business, you need the following package to run this program:
-                os, shutil, codecs, re, string, time, tkinter
-              There are some built-in components.
-              You may not be able to install them all.
-              If you report an error in PIP installation, please skip that package and continue to install the next one, and then come back and try again.
-            I won't go into details here. Although these packages have been marked with 'import' at the beginning of the code, I have told you again.
-            After you have executed the software, you should find the so-called Creative Workshop folder and export folder. You should figure it out for yourself.
-            No more thing here.
-        >>>Production time: 12 hours.
-        >>>Personal experience: it's too difficult.
-        >>>Current feeling: I don't want to tell more!!! I'm really tired of using translation software to translate an English comment.
-             I'm tired of copying and pasting repeatedly, because I've put too much energy into writing this program.
-               This is the end.
-           (I'm Chinese.)
-        There is no more content.
-        """
         super().__init__()
         self.FindFileCount = 0
         self.loadUi()
