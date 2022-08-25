@@ -38,12 +38,9 @@ class GetWorkshopLevels(tk.Tk):
         >>>Personal experience: it's too difficult.
         >>>Current feeling: I don't want to tell more!!! I'm really tired of using translation software to translate an English comment.
              I'm tired of copying and pasting repeatedly, because I've put too much energy into writing this program.
-               This is the end!!!!
+               This is the end.
            (I'm Chinese.)
-        There is no more content.Bye-bye.
-
-        Hidden content:
-            My bilibili account (HEX WEBSITE): 68747470733A2F2F73706163652E62696C6962696C692E636F6D2F353936393535303735
+        There is no more content.
         """
         super().__init__()
         self.FindFileCount = 0
