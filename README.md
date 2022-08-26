@@ -12,6 +12,6 @@ It's useful, isn't it?
 ### &ensp;ADOFAI Creative Workshop directory  
 &emsp;You can find the steam folder on your computer.  
 &emsp;And then open steamapps / workshop / content / 977950.  
-&emsp;This so-called "977950" folder is the Creative Workshop directory of the dance of ice and fire(ADOFAI Creative Workshop directory)
+&emsp;This so-called "977950" folder is the Creative Workshop directory of ADOFAI(ADOFAI Creative Workshop directory)
 ### &ensp;Level Export directory
 &emsp;Where you want to export the level (preferably an empty folder).
