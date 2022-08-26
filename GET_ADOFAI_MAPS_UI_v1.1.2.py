@@ -47,12 +47,24 @@ class LanguageDict():
                 "Title": f"ADOFAI Creative Workshop Level Extractor v{__version__}- Made by {__author__}",
                 "AdofaiWorkshopPath": "ADOFAI Creative Workshop directory:",
                 "OutputPath": "Level Export directory:",
-                "ManualSearch": "ManualSearch",
+                "ManualSearch": "Search",
                 "GetLevel": "Export Creative Workshop Level",
                 "SuccessfullyCompleted": "Finished:",
                 "TaskCompleted": "TaskCompleted:All levels have been exported",
                 "WrongPathMSG": ["Wrong Path", "This directory is not a Creative Workshop directory of ADOFAI"],
                 "TaskCompletedMSG": ["Success!", "All levels have been exported"]
+            },
+            "JP":{
+                "LangSettings": "言語",
+                "Title": f"ADOFAIクリエイティブワークショップ関数抽出器 v{__version__}- {__author__} 作成",
+                "AdofaiWorkshopPath": "ADOFAIクリエイティブワークショップカタログ:",
+                "OutputPath": "レベルエクスポートディレクトリ:",
+                "ManualSearch": "検索",
+                "GetLevel": "クリエイティブワークショップレベルのエクスポート",
+                "SuccessfullyCompleted": "正常に完了しました:",
+                "TaskCompleted": "タスク完了:すべてのレベルがエクスポートされました",
+                "WrongPathMSG": ["フォルトディレクトリ", "このディレクトリは氷と火の舞のアイデア工房ディレクトリではありません"],
+                "TaskCompletedMSG": ["成功!", "すべてのレベルがエクスポートされました"]
             }
         }
 
@@ -73,6 +85,8 @@ class GetWorkshopLevels(tk.Tk):
                     v.set(2)
                 elif lang == "EN":
                     v.set(3)
+                elif lang == "JP":
+                    v.set(4)
         except:
             with open(self.appdata+"\\Lang.txt","w",encoding="utf-8") as df:
                 df.write("CN")
@@ -105,7 +119,8 @@ class GetWorkshopLevels(tk.Tk):
         langs = [
             ("简体中文",1),
             ("繁體中文",2),
-            ("English",3)
+            ("English",3),
+            ("日本語",4)
         ]
         for lang, num in langs:
             self.submenu.add_radiobutton(label=lang,variable=v,value=num,command=lambda: self.SetLang(v.get()))
@@ -119,6 +134,8 @@ class GetWorkshopLevels(tk.Tk):
             lang = "TC"
         elif langId == 3:
             lang = "EN"
+        elif langId == 4:
+            lang = "JP"
         self.langdict = LanguageDict().langdict[lang]
 
     def SetLang(self, langId: int) -> None:
@@ -129,6 +146,8 @@ class GetWorkshopLevels(tk.Tk):
             lang = "TC"
         elif langId == 3:
             lang = "EN"
+        elif langId == 4:
+            lang = "JP"
         self.langdict = LanguageDict().langdict[lang]
         with open(self.appdata+"\\Lang.txt","w",encoding="utf-8") as df:
             df.write(lang)
