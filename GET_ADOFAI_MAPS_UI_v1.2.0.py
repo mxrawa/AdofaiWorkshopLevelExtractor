@@ -103,10 +103,8 @@ class GetWorkshopLevels(tk.Tk):
         self.resizable(width=False, height=False)
         self.FindFileCount = 0
         style = ttk.Style()
-        if time.localtime().tm_hour < 20:
-            style.theme_use("morph")
-        else:
-            style.theme_use("dark")
+        self.geometry("+200+200")
+        style.theme_use("morph")
         global v
         v = tk.IntVar()
         self.appdata = os.path.expanduser('~')+"\\AppData"
@@ -148,17 +146,17 @@ class GetWorkshopLevels(tk.Tk):
         self.AFRAME.grid(row=2, column=0, columnspan=3)
         if (self.lang != "EN") and (self.lang != "JP"):
             self.text = ScrolledText(
-                self.AFRAME, padding=5, height=20, autohide=True, width=97, state="disabled")
+                self.AFRAME, padding=5, height=20, autohide=True, width=97)
             self.text.pack(fill=cst.BOTH, expand=cst.YES)
             ttk.Button(self.AFRAME, text=self.langdict["GetLevel"], width=95, command=self.output, bootstyle=(cst.SUCCESS, cst.OUTLINE)).pack()
         elif self.lang == "EN":
             self.text = ScrolledText(
-                self.AFRAME, padding=5, height=20, autohide=True, width=112, state="disabled")
+                self.AFRAME, padding=5, height=20, autohide=True, width=112)
             self.text.pack(fill=cst.BOTH, expand=cst.YES)
             ttk.Button(self.AFRAME, text=self.langdict["GetLevel"], width=110, command=self.output, bootstyle=(cst.SUCCESS, cst.OUTLINE)).pack()
         elif self.lang == "JP":
             self.text = ScrolledText(
-                self.AFRAME, padding=5, height=20, autohide=True, width=115, state="disabled")
+                self.AFRAME, padding=5, height=20, autohide=True, width=115)
             self.text.pack(fill=cst.BOTH, expand=cst.YES)
             ttk.Button(self.AFRAME, text=self.langdict["GetLevel"], width=114, command=self.output, bootstyle=(cst.SUCCESS, cst.OUTLINE)).pack()
         self.menu = ttk.Menu(self)
@@ -178,7 +176,7 @@ class GetWorkshopLevels(tk.Tk):
         self.banWordsFrame = ttk.Labelframe(
             self, text=self.langdict["EditBlockedCharacters"], bootstyle=cst.PRIMARY)
         self.banWordsFrame.grid(row=0, rowspan=3, column=3)
-        bannedWordsTree = ttk.Treeview(self.banWordsFrame,
+        self.bannedWordsTree = ttk.Treeview(self.banWordsFrame,
                                        columns=[0],
                                        show=cst.HEADINGS,
                                        height=18
@@ -188,21 +186,24 @@ class GetWorkshopLevels(tk.Tk):
             ('+')
         ]
         for row in banWords:
-            bannedWordsTree.insert('', tk.END, values=row)
-        bannedWordsTree.selection_set('I001')
-        bannedWordsTree.heading(0, text=self.langdict["IllegalCharacter"])
-        bannedWordsTree.column(0, width=31)
-        bannedWordsTree.pack(side=cst.TOP, anchor=cst.NE, fill=cst.X)
+            self.bannedWordsTree.insert('', tk.END, values=row)
+        self.bannedWordsTree.selection_set('I001')
+        self.bannedWordsTree.heading(0, text=self.langdict["IllegalCharacter"])
+        self.bannedWordsTree.column(0, width=31)
+        self.bannedWordsTree.pack(side=cst.TOP, anchor=cst.NE, fill=cst.X)
         def tmpFunc():
             if AddItem.get():
-                bannedWordsTree.insert('', 'end', values=(AddItem.get()))
+                self.bannedWordsTree.insert('', 'end', values=(AddItem.get()))
                 banWords.append((AddItem.get()))
         def tmpFunc2():
-            if bannedWordsTree.item(bannedWordsTree.selection())["values"][0] != self.langdict["HtmlTag"]:
-                bannedWordsTree.delete(bannedWordsTree.selection())
-            else:
-                htmltag = self.langdict["HtmlTag"]
-                dlog.Messagebox.show_warning(title=self.langdict["CannotDeleteMSG"][0],message=self.langdict["CannotDeleteMSG"][1][0]+htmltag+self.langdict["CannotDeleteMSG"][1][1])
+            try:
+                if self.bannedWordsTree.item(self.bannedWordsTree.selection())["values"][0] != self.langdict["HtmlTag"]:
+                    self.bannedWordsTree.delete(self.bannedWordsTree.selection())
+                else:
+                    htmltag = self.langdict["HtmlTag"]
+                    dlog.Messagebox.show_warning(title=self.langdict["CannotDeleteMSG"][0],message=self.langdict["CannotDeleteMSG"][1][0]+htmltag+self.langdict["CannotDeleteMSG"][1][1])
+            except Exception:
+                self.bannedWordsTree.delete(self.bannedWordsTree.selection())
         ttk.Button(self.banWordsFrame, text=self.langdict["AddThisData"], width=30, bootstyle=("OUTLINE", "SUCCESS"),
                     command=lambda: tmpFunc()).pack(side=cst.BOTTOM)
         AddItem = ttk.Entry(self.banWordsFrame, width=32)
@@ -250,6 +251,13 @@ ws.run "cmd /c {self.appdata}\\temp.bat",vbhide""")
     def output(self):
         self.workshop = self.workshop_entry.get()
         self.output = self.output_entry.get()
+        self.Banned = []
+        for b in self.bannedWordsTree.get_children():
+            try:
+                if self.bannedWordsTree.item(b)["values"][0] != self.langdict['HtmlTag']:
+                    self.Banned.append(self.bannedWordsTree.item(b)["values"][0])
+            except Exception:
+                self.Banned.append(" ")
         self.ProcessingLevel()
 
     def set_workshop(self):
@@ -323,7 +331,9 @@ ws.run "cmd /c {self.appdata}\\temp.bat",vbhide""")
         for dKey, dVaules in sizeSet.items():
             try:
                 levelInfo = self.readInfo(sizeSet[dKey]).replace(
-                    "\\n", "").replace('"', "").replace("\\", "").replace("+", "")
+                    "\\n", "").replace('"', "").replace("\\", "")
+                for banWord in self.Banned:
+                    levelInfo = levelInfo.replace(banWord, "")
                 levelInfo = ' '.join(levelInfo.split())
             except Exception:
                 pass
