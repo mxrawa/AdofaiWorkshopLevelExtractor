@@ -15,3 +15,5 @@ It's useful, isn't it?
 &emsp;This so-called "977950" folder is the Creative Workshop directory of ADOFAI(ADOFAI Creative Workshop directory)
 ### &ensp;Level Export directory
 &emsp;Where you want to export the level (preferably an empty folder).
+
+![UI show](https://github.com/mxrawa/AdofaiWorkshopLevelExtractor/blob/master/UI.png)
